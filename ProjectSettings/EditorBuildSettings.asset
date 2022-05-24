@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Inventory.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/ItemRegister.unity
+    guid: e321e76a234a84841ae4865776688e7f
+  - enabled: 1
+    path: Assets/Scenes/ItemRecipe.unity
+    guid: 56b7e39c5b77a0d428989120aac3976a
+  - enabled: 1
+    path: Assets/Scenes/RecipeRegister.unity
+    guid: 7f92d6fab6d6f0e4ea0347bf27015a80
   m_configObjects: {}

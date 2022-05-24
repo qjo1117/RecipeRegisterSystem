@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [System.Serializable]
@@ -69,12 +70,22 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
+		if(Input.GetMouseButtonDown(1)) {
+			Vector2 offset = new Vector2(100.0f, -100.0f);
+			InventoryManager.SlotButton.GetComponent<RectTransform>().position = eventData.position - offset;
+			InventoryManager.SlotButton.gameObject.SetActive(true);
+			InventoryManager.beforeSlot = this;
+		}
+		else {
+			InventoryManager.SlotButton.gameObject.SetActive(false);
+		}
+
 		if (InventoryManager.isFocus == false) {
 			if(_itemInfo.count == 0) {
 				return;
 			}
 
-			InventoryManager.currentSlot.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
+			InventoryManager.currentSlot.GetComponent<RectTransform>().position = eventData.position;
 			InventoryManager.currentSlot.gameObject.SetActive(true);
 			InventoryManager.currentSlot.GetComponent<CanvasGroup>().interactable = false;
 			InventoryManager.currentSlot.GetComponent<CanvasGroup>().blocksRaycasts = false;
@@ -119,8 +130,9 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
 			ItemSlot parent = eventData.pointerEnter.GetComponentInParent<ItemSlot>();
 			if(parent == null || parent.gameObject.name.Contains("Result")) {
-				InventoryManager.beforeSlot.ItemInfo = InventoryManager.currentSlot.ItemInfo;
-				InventoryManager.beforeSlot.Init();
+				ItemInfo currentInfo = InventoryManager.currentSlot.ItemInfo;
+				currentInfo.count += InventoryManager.beforeSlot.ItemInfo.count;
+				InventoryManager.beforeSlot.Init(currentInfo);
 				InventoryManager.currentSlot.GetComponent<CanvasGroup>().interactable = true;
 				InventoryManager.currentSlot.GetComponent<CanvasGroup>().blocksRaycasts = true;
 				InventoryManager.currentSlot.gameObject.SetActive(false);
@@ -131,11 +143,15 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 			if (parent.ItemInfo.count != 0) {
 				if (parent.ItemInfo.name.Contains(InventoryManager.currentSlot.ItemInfo.name)) {
 					ItemInfo info = InventoryManager.currentSlot.ItemInfo;
-					ItemInfo parentInfo = parent.ItemInfo;
 					info.count += parent.ItemInfo.count;
 					parent.Init(info);
-
-
+				}
+				else if (InventoryManager.currentSlot.ItemInfo.count == 1) {
+					ItemInfo info = InventoryManager.currentSlot.ItemInfo;
+					ItemInfo beforeInfo = InventoryManager.beforeSlot.ItemInfo;
+					beforeInfo.count += info.count;
+					beforeInfo.name = info.name;
+					InventoryManager.beforeSlot.Init(beforeInfo);
 				}
 				else {
 					ItemInfo info = InventoryManager.currentSlot.ItemInfo;
@@ -143,7 +159,6 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 					parent.Init(info);
 					InventoryManager.beforeSlot.Init(parentInfo);
 				}
-
 			}
 			else {
 				ItemInfo info = InventoryManager.currentSlot.ItemInfo;

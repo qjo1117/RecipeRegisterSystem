@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class RecipeInfo
@@ -12,16 +13,17 @@ public class RecipeInfo
     public string[] key = new string[3];
 }
 
+[System.Serializable]
+public class RecipeInfoJson {
+    public List<RecipeInfo> listInfos = new List<RecipeInfo>();
+
+}
+
 public class RecipeManager : MonoBehaviour
 {
     [SerializeField]
     public RecipeInfo _info;
 
-    [System.Serializable]
-    public class RecipeInfoJson {
-       public List<RecipeInfo> listInfos = new List<RecipeInfo>();
-
-    }
     public RecipeInfoJson _listInfos = new RecipeInfoJson();
 
 
@@ -56,8 +58,9 @@ public class RecipeManager : MonoBehaviour
 	public void SaveFromJson()
 	{ 
 		string json = JsonUtility.ToJson(_listInfos);
-        CreateJsonFile("Assets/Resources/Data", "SaveData", json); 
+        CreateJsonFile(Application.dataPath + "/Resources/Data", "SaveData", json); 
     }
+
 	void CreateJsonFile(string createPath, string fileName, string jsonData)
 	{
 		FileStream fileStream = new FileStream(string.Format("{0}/{1}.json", createPath, fileName), FileMode.Create);
@@ -75,34 +78,6 @@ public class RecipeManager : MonoBehaviour
 
         for (int i = 0; i < _listInfos.listInfos.Count; i++) {
             LoadRegisterRecipe(_listInfos.listInfos[i].key, _listInfos.listInfos[i].retItem);
-        }
-    }
-
-	[ContextMenu("CreateInfoDict")]
-	public void TestCreateInfo()
-	{
-        {
-            string[] key = new string[3];
-            key[0] = "11";
-            key[1] = "11";
-            key[2] = "";
-            RegisterRecipe(key, new ItemInfo { count = 1, name = "Book" });
-        }
-
-        {
-            string[] key = new string[3];
-            key[0] = "1";
-            key[1] = "1";
-            key[2] = "2";
-            RegisterRecipe(key, new ItemInfo { count = 1, name = "Sword" });
-        }
-
-        {
-            string[] key = new string[3];
-            key[0] = "12";
-            key[1] = "21";
-            key[2] = "";
-            RegisterRecipe(key, new ItemInfo { count = 2, name = "Winter" });
         }
     }
 
@@ -133,6 +108,11 @@ public class RecipeManager : MonoBehaviour
         }
 
     }
+
+    public void ChangeSceneToRecipe()
+	{
+        SceneManager.LoadScene(2);
+	}
 
 	void RegisterRecipe(string[] keys, ItemInfo info)
 	{

@@ -1,1 +1,70 @@
-{"listInfos":[{"retItem":{"name":"Ston Pickaxe","count":1},"key":["CobblestoneCobblestoneCobblestone"," Stick "," Stick "]},{"retItem":{"name":"Carrot on a Stick","count":1},"key":["Fishing Rod "," Carrot",""]},{"retItem":{"name":"Stick","count":1},"key":["Plank","Plank",""]},{"retItem":{"name":"Fishing Rod","count":1},"key":["  Stick"," StickString","Stick String"]},{"retItem":{"name":"Plank","count":4},"key":["Log","",""]},{"retItem":{"name":"Carrot","count":3},"key":["BookBook","BookBook",""]}]}
+{
+  
+  "listInfos": [
+    {
+      "retItem": {
+        "name": "Arrow",
+        "count": 1
+      },
+      "key": [ "3|3|3|", "3||3|", "" ]
+    },
+    {
+      "retItem": {
+        "name": "Stick",
+        "count": 1
+      },
+      "key": [ "", "Plank|", "Plank|" ]
+    },
+    {
+      "retItem": {
+        "name": "Plank",
+        "count": 4
+      },
+      "key": [ "", "Log|", "" ]
+    },
+    {
+      "retItem": {
+        "name": "Fishing Rod",
+        "count": 1
+      },
+      "key": [ "||Stick|", "|Stick|String|", "Stick||String|" ]
+    },
+    {
+      "retItem": {
+        "name": "Ston Pickaxe",
+        "count": 1
+      },
+      "key": [ "Cobblestone|Cobblestone|Cobblestone|",
+                        "|Stick||", 
+                        "|Stick||" ]
+    },
+    {
+      "retItem": {
+        "name": "Carrot",
+        "count": 3
+      },
+      "key": [ "Book|Book|", "Book|Book|", "" ]
+    },
+    {
+      "retItem": {
+        "name": "Carrot on a Stick",
+        "count": 1
+      },
+      "key": [ "", "Fishing Rod||", "|Carrot|" ]
+    },
+    {
+      "retItem": {
+        "name": "null",
+        "count": 0
+      },
+      "key": [ "", "", "" ]
+    },
+    {
+      "retItem": {
+        "name": "null",
+        "count": 0
+      },
+      "key": [ "", "", "" ]
+    }
+  ]
+}

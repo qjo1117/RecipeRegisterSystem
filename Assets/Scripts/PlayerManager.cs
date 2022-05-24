@@ -11,6 +11,11 @@ public class ItemHandler
     public ItemInfo info;
 }
 
+[System.Serializable]
+public class ItemJson {
+    public List<ItemHandler> listInfos = new List<ItemHandler>();
+}
+
 public class PlayerManager : MonoBehaviour
 {
     public InventoryManager _inventory;
@@ -19,12 +24,13 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     public ItemJson _info;
 
-    [System.Serializable]
-    public class ItemJson {
-        public List<ItemHandler> listInfos = new List<ItemHandler>();
-	}
+	private void Start()
+	{
+        LoadFromJson();
+        InventorySeting();
+    }
 
-    [ContextMenu("Inventory Make")]
+	[ContextMenu("Inventory Make")]
     public void InventorySeting()
 	{
         _inventory.ClearSlot();
@@ -46,7 +52,7 @@ public class PlayerManager : MonoBehaviour
     public void SaveFromJson()
     {
         string json = JsonUtility.ToJson(_info);
-        CreateJsonFile("Assets/Resources/Data", "PlayerSave", json);
+        CreateJsonFile(Application.dataPath + "/Resources/Data", "PlayerSave", json);
     }
 
     void CreateJsonFile(string createPath, string fileName, string jsonData)
@@ -56,6 +62,16 @@ public class PlayerManager : MonoBehaviour
         fileStream.Write(data, 0, data.Length);
         fileStream.Close();
     }
+
+    [ContextMenu("Load")]
+    public void LoadFromJson()
+    {
+        string jsonFile = File.ReadAllText(Application.dataPath + "/Resources/Data/PlayerSave.json");
+        ItemJson infos = JsonUtility.FromJson<ItemJson>(jsonFile);
+        _info = infos;
+
+    }
+
 
     [ContextMenu("CreateManager")]
     void CreateManager()

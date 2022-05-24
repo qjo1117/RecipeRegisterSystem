@@ -18,6 +18,7 @@ public class InventoryManager : MonoBehaviour
     static public ItemSlot currentSlot;
     static public Transform InventoryTransform;
     static public bool isFocus = false;
+    static public SlotButton SlotButton;
 
     private Canvas _canvas;
 
@@ -33,6 +34,8 @@ public class InventoryManager : MonoBehaviour
 
         InventoryTransform = transform;
         _canvas= GameObject.FindObjectOfType<Canvas>();
+
+        SlotButton = GameObject.Find("SlotButton").GetComponent<SlotButton>();
     }
 
     void Update()

@@ -105,16 +105,16 @@ public class CombinationManager : MonoBehaviour
 
                 string str = _slots[x + (y * 3)]._itemInfo.name;
                 if (str != "null") {
-                    ret[y] += str;
+                    ret[y] += str + "|";
                 }
                 else {
-                    ret[y] += " ";
+                    ret[y] += "|";
                 }
             }
         }
 
-        Debug.Log($"X : {baseX}, Y : {baseY} / Width : {width}, Height : {height}");
-        Debug.Log($"Ret [{ret[0]}] [{ret[1]}] [{ret[2]}]");
+        //Debug.Log($"X : {baseX}, Y : {baseY} / Width : {width}, Height : {height}");
+        //Debug.Log($"Ret [{ret[0]}] [{ret[1]}] [{ret[2]}]");
 
         return ret;
 	}
@@ -122,23 +122,13 @@ public class CombinationManager : MonoBehaviour
     [ContextMenu("Create")]
     public void Create()
 	{
-        for (int i = 0; i < 9; ++i)
-        {
+        for (int i = 0; i < 9; ++i) {
             _slots[i] = Instantiate(Resources.Load<GameObject>("ItemSlot"), transform).GetComponent<ItemSlot>();
             _slots[i].name = $"Combination_Slot_{i}";
             _slots[i].GetComponent<RectTransform>().anchoredPosition = _basePos + new Vector3((i % 3) * _width, (i / 3) * -_height, 0.0f);
             _slots[i].Init("null", 0);
         }
 	}
-
-    [ContextMenu("Clear")]
-    private void Clear()
-	{
-        for (int i = 0; i < 9; ++i)
-        {
-            GameObject.Destroy(_slots[i].gameObject);
-        }
-    }
 
 	void Update()
     {
